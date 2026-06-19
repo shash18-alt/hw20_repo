@@ -1,0 +1,22 @@
+name: CITProcessor
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run custom Verilator Lint Action
+        id: lint
+        uses: shash18-alt/sv-verilator-lint-action@v1
+        with:
+          files: "test.sv"
+          severity: "warning"
+
+      - name: Show JSON result
+        run: echo "${{ steps.lint.outputs.result }}"
